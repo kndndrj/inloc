@@ -1,4 +1,4 @@
-_TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+_LOOKUP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
 
 def encode(body: bytes) -> str:
@@ -23,7 +23,7 @@ def encode(body: bytes) -> str:
             chunk += "0" * (6 - len(chunk))
 
         # take the appropriate character from the lookup
-        encoded += _TABLE[int(chunk, 2)]
+        encoded += _LOOKUP[int(chunk, 2)]
 
     # finally, add padding characters ("=")
     return encoded + "=" * padding
@@ -35,7 +35,7 @@ def decode(body: str) -> bytes:
     bits = str()
     for c in body:
         if c not in ("=", " ", "\t", "\n"):
-            bits += f"{_TABLE.index(c):06b}"
+            bits += f"{_LOOKUP.index(c):06b}"
 
     # assemble an array of bytes from produced bits
     decoded = bytearray()
@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     if "-d" in sys.argv:
         # strip trailing newline from input
-        dec = decode("\n".join(sys.stdin.readlines()).removesuffix("\n"))
+        dec = decode("\n".join(sys.stdin.readlines()))
         # print without a newline
         sys.stdout.buffer.write(dec)
     else:
