@@ -1,4 +1,4 @@
-# Ray Tracer
+# TOTP
 
 | Language | Lines of Code |
 | :------: | :-----------: |
